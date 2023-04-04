@@ -21,5 +21,6 @@ namespace FlightManager.Data.Entities
         public string PilotName { get; set; }
         public int PassengerCapacity { get; set; }
         public int BusinessClassCapacity { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

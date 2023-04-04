@@ -19,5 +19,6 @@ namespace FlightManager.Data.Entities
         public string PhoneNumber { get; set; }
         public string Nationality { get; set; }
         public string TypeTicket { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FlightManager.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace FlightManager.Data
         public string Egn { get; set; }
         public string Address { get; set; }
         public string Role { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
