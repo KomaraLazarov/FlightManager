@@ -65,7 +65,29 @@ namespace FlightManager.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [Display(Name = "First name")]
+            public string Firstname { get; set; }
 
+            [Required]
+            [Display(Name = "Last name")]
+            public string Lastname { get; set; }
+
+            [Required]
+            [Display(Name = "Egn")]
+            public string Egn { get; set; }
+
+            [Required]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Phone")]
+            public string Phone { get; set; }
+
+            [Required]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -80,7 +102,8 @@ namespace FlightManager.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email};
+                var user = new User { UserName = Input.Username, Email = Input.Email, PhoneNumber = Input.Phone, FirstName = Input.Firstname,
+                LastName = Input.Lastname, Egn = Input.Egn, Address = Input.Address};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

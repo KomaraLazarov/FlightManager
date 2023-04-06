@@ -1,0 +1,106 @@
+﻿@model FlightManager.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All users</h1>
+
+<form asp-action="Index" asp-controller="Users" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    UserName
+                </th>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Egn
+                </th>
+                <th>
+                    PhoneNumber
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Role
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.userList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Egn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        <a style="color:black;" asp-action="Edit" asp-route-id="@item.Id">Edit</a> <span>|</span>
+                        <a style="color:black;" asp-action="Delete" asp-route-id="@item.Id">Delete</a> <span>|</span>
+                        <a style="color:black;" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.pageCount; i++)
+        {
+            <li class="page-item">
+
+                @if (i != Model.currentPageIndex)
+                {
+                    <a class="page-link" href="javascript: PagerClick(@i);">@i</a>
+                }
+                else
+                {
+                    <a class="page-link">@i</a>
+                }
+
+            </li>
+        }
+    </ul>
+    <input type="hidden" id="hfCurrentPageIndex" name="currentPageIndex" />
+
+</form>
+
+<script type="text/javascript">
+    function PagerClick(index)
+    {
+        document.getElementById("hfCurrentPageIndex").value = index;
+        document.forms[1].submit();
+    }
+</script>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        <a asp-action="Create" style="border:solid; border-color:black; border-radius:5px; display:flex; padding:5px; width:100px; text-decoration:none; color: black;">Create New</a>
+    </p>
+}
