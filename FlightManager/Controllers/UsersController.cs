@@ -18,8 +18,13 @@ namespace FlightManager.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                GetUserList(1).userList = GetUserList(1).userList.Where(s => s.LastName.Contains(searchString));
+            }
+
             return View(GetUserList(1));
         }
         [HttpPost]
@@ -94,7 +99,7 @@ namespace FlightManager.Controllers
 
         private UserViewModel GetUserList(int currentPage)
         {
-            int maxRowsPerPAge = 5;
+            int maxRowsPerPAge = 10;
             UserViewModel userModel = new UserViewModel();
 
             userModel.userList =  _db.Users

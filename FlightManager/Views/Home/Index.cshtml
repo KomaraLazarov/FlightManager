@@ -1,8 +1,35 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Identity.SignInManager<FlightManager.Data.User> sighInManager;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (sighInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole("Administrator"))
+                {
+                
+            <h1 class="display-4"><b>Welcome, Admin!</b></h1>
+            <img src="https://www.puzzle.store.bg/lrgimg/135804/samoletite-dysti.jpg" alt="dusty" style="width:630px;height:430px"/>
+        }
+        @if (User.IsInRole("Employee"))
+        {
+            <h1 class="display-4"><b>Welcome, Employee!</b></h1>
+            <img src="https://www.puzzle.store.bg/lrgimg/135804/samoletite-dysti.jpg" alt="dusty" style="width:630px;height:430px"/>
+        }
+        @if (!(User.IsInRole("Administrator") || User.IsInRole("Employee")))
+        {
+            <h2>Reserve a flight?</h2>
+        }
+    }
+    else
+    {
+        <h1 class="display-4"><b>Welcome</b></h1>
+        <img src="https://www.puzzle.store.bg/lrgimg/135804/samoletite-dysti.jpg" alt="dusty" style="width:630px;height:430px"/>
+        <h2>Reserve a flight?</h2>
+    }
+
+
 </div>

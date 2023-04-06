@@ -4,7 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>All users</h1>
+<h1>All employees</h1>
+
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        <a asp-action="Create" style="border:solid; border-color:black; border-radius:5px; display:flex; padding:5px; width:100px; text-decoration:none; color: black;">Create New</a>
+    </p>
+}
+
 
 <form asp-action="Index" asp-controller="Users" method="post">
     <table class="table">
@@ -91,16 +100,9 @@
 </form>
 
 <script type="text/javascript">
-    function PagerClick(index)
-    {
+    function PagerClick(index) {
         document.getElementById("hfCurrentPageIndex").value = index;
         document.forms[1].submit();
     }
 </script>
 
-@if (User.IsInRole("Administrator"))
-{
-    <p>
-        <a asp-action="Create" style="border:solid; border-color:black; border-radius:5px; display:flex; padding:5px; width:100px; text-decoration:none; color: black;">Create New</a>
-    </p>
-}

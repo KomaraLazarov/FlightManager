@@ -21,6 +21,15 @@ namespace FlightManager.Data.Entities
         public string PilotName { get; set; }
         public int PassengerCapacity { get; set; }
         public int BusinessClassCapacity { get; set; }
+        public string Duration
+        {
+            get
+            {
+                TimeSpan time = Landing.Subtract(TakeOff);
+                return time.ToString();
+            }
+        }
+
         public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

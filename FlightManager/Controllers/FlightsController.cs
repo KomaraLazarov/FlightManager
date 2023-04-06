@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightManager.Data;
 using FlightManager.Data.Entities;
+using FlightManager.ViewModels;
 
 namespace FlightManager.Controllers
 {
@@ -20,9 +21,20 @@ namespace FlightManager.Controllers
         }
 
         // GET: Flights
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string searchString)
         {
-            return View(await _context.Flights.ToListAsync());
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                GetFlightList(1).flightList = GetFlightList(1).flightList.Where(s => s.LocationFrom.Contains(searchString));
+            }
+
+            return View(GetFlightList(1));
+        }
+
+        [HttpPost]
+        public IActionResult Index(int currentPageIndex)
+        {
+            return View(GetFlightList(currentPageIndex));
         }
 
         // GET: Flights/Details/5
@@ -148,6 +160,22 @@ namespace FlightManager.Controllers
         private bool FlightExists(int id)
         {
             return _context.Flights.Any(e => e.Id == id);
+        }
+
+        private FlightViewModel GetFlightList(int currentPage)
+        {
+            int maxRowsPerPAge = 2;
+            FlightViewModel flightModel = new FlightViewModel();
+
+            flightModel.flightList = _context.Flights
+                .Skip((currentPage - 1) * maxRowsPerPAge).Take(maxRowsPerPAge).ToList();
+
+            double pageCount = (double)((decimal)_context.Flights.Count() / Convert.ToDecimal(maxRowsPerPAge));
+
+            flightModel.pageCount = (int)Math.Ceiling(pageCount);
+            flightModel.currentPageIndex = currentPage;
+
+            return flightModel;
         }
     }
 }
