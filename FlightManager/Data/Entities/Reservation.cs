@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightManager.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,16 +10,19 @@ namespace FlightManager.Data.Entities
 {
     public class Reservation
     {
+        public Reservation()
+        {
+            Status = FlightStatusEnum.Pending;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string SurName { get; set; }
-        public string LastName { get; set; }
-        public string Egn { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Nationality { get; set; }
-        public string TypeTicket { get; set; }
-        public virtual User User { get; set; }
+        public int FlightId { get; set; }
+        public virtual Flight Flight { get; set; }
+        public int PassengerId { get; set; }
+        public virtual Passenger Passenger { get; set; }
+        public TypeTicket TypeTicket { get; set; }
+        public FlightStatusEnum Status { get; set; }
     }
 }

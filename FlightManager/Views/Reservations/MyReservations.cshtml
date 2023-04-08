@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<FlightManager.Data.Entities.Reservation>
+@inject Microsoft.AspNetCore.Identity.SignInManager<FlightManager.Data.User> sighInManager;
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Reservations</h1>
-
-<p>
-    <a asp-action="Create" style="border:solid; border-color:black; border-radius:5px; display:flex; padding:5px; width:100px; text-decoration:none; color: black;">Create New</a>
-</p>
 
 <table class="table">
     <thead>
@@ -23,10 +20,10 @@
                 Passenger
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TypeTicket)
+                TypeTicket
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Status
             </th>
             <th></th>
         </tr>
@@ -50,20 +47,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-                <td>
-                    @if (item.Status == FlightManager.Data.Enums.FlightStatusEnum.Pending)
-                    {
-                        <form asp-action="Confirm">
-                            <input type="submit" asp-route-id="@item.Id" value="Confirm" asp-action="Confirm" />
-                        </form>
-                    }
-                </td>
             </tr>
         }
     </tbody>
 </table>
+

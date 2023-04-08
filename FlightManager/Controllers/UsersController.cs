@@ -51,7 +51,7 @@ namespace FlightManager.Controllers
             return View(user);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(string? id)
         {
             if (id == null)
             {
@@ -67,8 +67,8 @@ namespace FlightManager.Controllers
 
             return View(user);
         }
-
-        public IActionResult Edit(int? id)
+        [HttpGet]
+        public IActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -86,17 +86,46 @@ namespace FlightManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int? id, User user)
+        public IActionResult Edit(string id, User user)
         {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _db.Entry(user).State = EntityState.Modified;
+                _db.Update(user);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var user = await _db.Users
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _db.Users.FindAsync(id);
+            _db.Users.Remove(user);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         private UserViewModel GetUserList(int currentPage)
         {
             int maxRowsPerPAge = 10;

@@ -16,5 +16,6 @@ namespace FlightManager.Data
             : base(options)
         {
         }
+        public DbSet<FlightManager.Data.Entities.Passenger> Passenger { get; set; }
     }
 }

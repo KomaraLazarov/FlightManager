@@ -21,6 +21,9 @@
         <thead>
             <tr>
                 <th>
+                    №
+                </th>
+                <th>
                     LocationFrom
                 </th>
                 <th>
@@ -38,32 +41,35 @@
         <tbody>
             @foreach (var item in Model.flightList)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LocationFrom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LocationTo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TakeOff)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </td>
-                    <td>
-                        @if (sighInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                        {
-                            <a style="color:black;" asp-action="Edit" asp-route-id="@item.Id">Edit</a> <span>|</span>
-                            <a style="color:black;" asp-action="Delete" asp-route-id="@item.Id">Delete</a> <span>|</span>
-                            <a style="color:black;" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        }
-                        @if (sighInManager.IsSignedIn(User) && User.IsInRole("Employee"))
-                        {
-                            <a style="color:black;" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        }
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TakeOff)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @if (sighInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <span>|</span>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> <span>|</span>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    }
+                    @if (sighInManager.IsSignedIn(User) && User.IsInRole("Employee"))
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

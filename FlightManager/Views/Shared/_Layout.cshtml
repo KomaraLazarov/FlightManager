@@ -32,7 +32,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Flights" asp-action="Index">Flights</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="MyReservations">Reservations</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Employees</a>
@@ -44,7 +44,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Flights" asp-action="Index">Flights</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="MyReservations">Reservations</a>
                             </li>
                         }
                         @if (!sighInManager.IsSignedIn(User))
@@ -53,7 +53,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Flights" asp-action="Index">Flights</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Passengers" asp-action="Create">Make a reservation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="MyReservations">My reservations</a>
                             </li>
                         }
                     </ul>

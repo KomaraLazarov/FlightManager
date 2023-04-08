@@ -9,6 +9,11 @@ namespace FlightManager.Data.Entities
 {
     public class Flight
     {
+        public Flight()
+        {
+            Reservations = new HashSet<Reservation>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
