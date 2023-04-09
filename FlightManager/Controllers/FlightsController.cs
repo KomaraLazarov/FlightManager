@@ -36,6 +36,34 @@ namespace FlightManager.Controllers
         {
             return View(GetFlightList(currentPageIndex));
         }
+        public IActionResult AllPassengers(int id)
+        {
+            var flight = _context.Flights.FirstOrDefault(x=>x.Id == id);
+
+            var reservation = _context.Reservations.Include(r => r.Flight).Include(r => r.Passenger).FirstOrDefault(x => x.FlightId == flight.Id);
+
+            var allPassengers = _context.Passenger.ToList();
+
+            List<Passenger> passengersForAFlight = new List<Passenger>();
+
+            try
+            {
+                foreach (var passenger in allPassengers.Where(x => x.Id == reservation.Passenger.Id))
+                {
+                    if (passenger != null)
+                    {
+                        passengersForAFlight.Add(passenger);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            return View(passengersForAFlight.ToList());
+        }
 
         // GET: Flights/Details/5
         public async Task<IActionResult> Details(int? id)

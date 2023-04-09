@@ -22,6 +22,7 @@ namespace FlightManager.Data.Entities
         public virtual Flight Flight { get; set; }
         public int PassengerId { get; set; }
         public virtual Passenger Passenger { get; set; }
+        [Required]
         public TypeTicket TypeTicket { get; set; }
         public FlightStatusEnum Status { get; set; }
     }

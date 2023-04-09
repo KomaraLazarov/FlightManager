@@ -16,14 +16,23 @@ namespace FlightManager.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string SurName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         [StringLength(10, ErrorMessage = "The Egn must be 10 digits", MinimumLength = 10)]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Please enter a valid Egn")]
         public string Egn { get; set; }
+        [Required]
         [StringLength(10, ErrorMessage = "The phone number must be 10 digits", MinimumLength = 10)]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Please enter a valid phone number.")]
         public string PhoneNumber { get; set; }
+        [Required]
         public string Nationality { get; set; }
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
         public string FullName 

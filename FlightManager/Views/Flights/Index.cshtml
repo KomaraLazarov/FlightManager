@@ -69,6 +69,14 @@
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                     }
                 </td>
+                <td>
+                    @if (sighInManager.IsSignedIn(User) && User.IsInRole("Administrator") || sighInManager.IsSignedIn(User) && User.IsInRole("Employee"))
+                    {
+                        <form asp-action="AllPassengers">
+                            <input type="submit" asp-route-id="@item.Id" value="Passengers" asp-action="AllPassengers" />
+                        </form>
+                    }
+                </td>
             </tr>
             }
         </tbody>

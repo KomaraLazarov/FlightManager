@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightManager.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,12 +18,20 @@ namespace FlightManager.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public string LocationFrom { get; set; }
+        [Required]
         public string LocationTo { get; set; }
+        [Required]
         public DateTime TakeOff { get; set; }
+        [Required]
+        [LandingTimeAttribute("TakeOff")]
         public DateTime Landing { get; set; }
+        [Required]
         public string TypePlane { get; set; }
+        [Required]
         public string UniCodePlane { get; set; }
+        [Required]
         public string PilotName { get; set; }
         public int PassengerCapacity { get; set; }
         public int BusinessClassCapacity { get; set; }

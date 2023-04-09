@@ -49,40 +49,16 @@ namespace FlightManager.Controllers
                     flight.BusinessClassCapacity -= 1;
                     reservation.Status = Data.Enums.FlightStatusEnum.Accepted;
                     _context.SaveChanges();
-
-                    //string to = "niki04lazarov04@gmail.com"; //To address    
-                    //string from = "niki04lazarov04@gmail.com"; //From address    
-                    //MailMessage message = new MailMessage(from, to);
-
-                    //string mailbody = $"You reserved 1 Business ticket. They left {flight.BusinessClassCapacity} tickets";
-                    //message.Subject = "Sending Email Confirmation";
-                    //message.Body = mailbody;
-                    //message.BodyEncoding = Encoding.UTF8;
-                    //message.IsBodyHtml = true;
-                    //SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
-                    //System.Net.NetworkCredential basicCredential1 = new
-                    //System.Net.NetworkCredential("niki04lazarov04@gmail.com", "nikolalazarov04");
-                    //client.EnableSsl = true;
-                    //client.UseDefaultCredentials = false;
-                    //client.Credentials = basicCredential1;
-                    //try
-                    //{
-                    //    client.Send(message);
-                    //}
-
-                    //catch (Exception ex)
-                    //{
-                    //    throw ex.InnerException;
-                    //}
+                   
                     var email = new MimeMessage();
 
                     email.From.Add(new MailboxAddress("Sender Name", "niki04lazarov04@gmail.com"));
-                    email.To.Add(new MailboxAddress("Receiver Name", "niki04lazarov04@gmail.com"));
+                    email.To.Add(new MailboxAddress("Receiver Name", reservation.Passenger.Email));
 
-                    email.Subject = "Testing out email sending";
+                    email.Subject = "Successfull reserved flight!";
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
                     {
-                        Text = "Hello all the way from the land of C#"
+                        Text = $"You reserved a flight to {reservation.Flight.LocationTo}. Tickets left {reservation.Flight.BusinessClassCapacity} for this flight."
                     };
 
                     using (var smtp = new SmtpClient())
@@ -90,7 +66,7 @@ namespace FlightManager.Controllers
                         smtp.Connect("smtp.gmail.com", 587, false);
 
                         // Note: only needed if the SMTP server requires authentication
-                        smtp.Authenticate("niki04lazarov04@gmail.com", "nikolalazarov04");
+                        smtp.Authenticate("niki04lazarov04@gmail.com", "qwozxrgvfhpyzduc");
 
                         smtp.Send(email);
                         smtp.Disconnect(true);
@@ -109,6 +85,28 @@ namespace FlightManager.Controllers
                     flight.PassengerCapacity -= 1;
                     reservation.Status = Data.Enums.FlightStatusEnum.Accepted;
                     _context.SaveChanges();
+
+                    var email = new MimeMessage();
+
+                    email.From.Add(new MailboxAddress("Sender Name", "niki04lazarov04@gmail.com"));
+                    email.To.Add(new MailboxAddress("Receiver Name", reservation.Passenger.Email));
+
+                    email.Subject = "Successfull reserved flight!";
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
+                    {
+                        Text = $"You reserved a flight to {reservation.Flight.LocationTo}. Tickets left {reservation.Flight.PassengerCapacity} for this flight."
+                    };
+
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Connect("smtp.gmail.com", 587, false);
+
+                        // Note: only needed if the SMTP server requires authentication
+                        smtp.Authenticate("niki04lazarov04@gmail.com", "qwozxrgvfhpyzduc");
+
+                        smtp.Send(email);
+                        smtp.Disconnect(true);
+                    }
                 }
                 else
                 {
